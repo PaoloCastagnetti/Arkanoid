@@ -8,7 +8,7 @@ Player::Player() {
     this->height = 0;
     this->speed = 0;
 }
-Player::Player(int X, int Y, int Width, int Height, int Speed) {
+Player::Player(float X, float Y, float Width, float Height, float Speed) {
     this->x = X;
     this->y = Y;
     this->width = Width;
@@ -24,35 +24,35 @@ Player::Player(const Player& player) {
 }
 
 //Getters
-int Player::getX() {
+float Player::getX() {
     return this->x;
 }
-int Player::getY() {
+float Player::getY() {
     return this->y;
 }
-int Player::getWidth() {
+float Player::getWidth() {
     return this->width;
 }
-int Player::getHeight() {
+float Player::getHeight() {
     return this->height;
 }
-int Player::getSpeed() {
+float Player::getSpeed() {
     return this->speed;
 }
 
 //Setters
-void Player::setX(int X) {
+void Player::setX(float X) {
     this->x = X;
 }
-void Player::setY(int Y) {
+void Player::setY(float Y) {
     this->y = Y;
 }
-void Player::setWidth(int Width) {
+void Player::setWidth(float Width) {
     this->width = Width;
 }
-void Player::setHeight(int Height) {
+void Player::setHeight(float Height) {
     this->height = Height;
 }
-void Player::setSpeed(int Speed) {
+void Player::setSpeed(float Speed) {
     this->speed = Speed;
 }

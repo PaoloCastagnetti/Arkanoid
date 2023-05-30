@@ -5,27 +5,27 @@ public:
 
     //Constructors
     Player();
-    Player(int X, int Y, int Width, int Height, int Speed);
+    Player(float X, float Y, float Width, float Height, float Speed);
     Player(const Player& player);
 
     //Getters
-    int getX();
-    int getY();
-    int getWidth();
-    int getHeight();
-    int getSpeed();
+    float getX();
+    float getY();
+    float getWidth();
+    float getHeight();
+    float getSpeed();
 
     //Setters
-    void setX(int X);
-    void setY(int Y);
-    void setWidth(int Width);
-    void setHeight(int Height);
-    void setSpeed(int Speed);
+    void setX(float X);
+    void setY(float Y);
+    void setWidth(float Width);
+    void setHeight(float Height);
+    void setSpeed(float Speed);
 
 private:
-    int x;
-    int y;
-    int width;
-    int height;
-    int speed;
+    float x;
+    float y;
+    float width;
+    float height;
+    float speed;
 };
