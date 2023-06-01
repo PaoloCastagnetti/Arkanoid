@@ -76,7 +76,7 @@ void handleInput(Player& player) {
 }
 
 // Game update
-void update(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
+bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
     
     Timer stepTimer;
     // Get the delta time in milliseconds
@@ -87,12 +87,13 @@ void update(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
     // Restart step timer
     stepTimer.start();
 
-    CheckCollisions(player, levels, ball);
+    bool dead = CheckCollisions(player, ball, levels);
     ball.Update();
+    return dead;
 }
 
 // Game objects rendering
-void render(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
+void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
     SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
     SDL_RenderClear(gRenderer);
 
@@ -159,7 +160,8 @@ void runGame() {
 
     while (!quit) {
         handleInput(*player);
-        update(*player, *ball, levels);
+        quit = update(*player, *ball, levels);
+        
         render(*player, *ball, levels);
     }
 
