@@ -33,6 +33,12 @@
     <ClCompile Include="ResourceFiles\Collisions.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceFiles\MovableTexture.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceFiles\Texture.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFiles\Block.h">
@@ -51,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HeaderFiles\Collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFiles\MovableTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFiles\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFiles\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

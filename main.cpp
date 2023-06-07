@@ -6,10 +6,11 @@
 #include "HeaderFiles/Constants.h"
 #include "HeaderFiles/Timer.h"
 #include "HeaderFiles/Collisions.h"
+#include "HeaderFiles/Globals.h"
 
-// Hlobal variables
-SDL_Window* gWindow = nullptr;
-SDL_Renderer* gRenderer = nullptr;
+// Global variables
+SDL_Window* globalWindow = nullptr;
+SDL_Renderer* globalRenderer = nullptr;
 
 // Initialize SDL and the game window
 bool init() {
@@ -17,13 +18,13 @@ bool init() {
         return false;
     }
 
-    gWindow = SDL_CreateWindow("Arkanoid", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (gWindow == nullptr) {
+    globalWindow = SDL_CreateWindow("Arkanoid", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (globalWindow == nullptr) {
         return false;
     }
 
-    gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-    if (gRenderer == nullptr) {
+    globalRenderer = SDL_CreateRenderer(globalWindow, -1, SDL_RENDERER_ACCELERATED);
+    if (globalRenderer == nullptr) {
         return false;
     }
 
@@ -94,13 +95,13 @@ bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
 
 // Game objects rendering
 void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
-    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
-    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(globalRenderer, 0, 0, 0, 255);
+    SDL_RenderClear(globalRenderer);
 
     // Player rendering
-    SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
     SDL_Rect playerRect = { player.getX(), player.getY(), player.getWidth(), player.getHeight()};
-    SDL_RenderFillRect(gRenderer, &playerRect);
+    SDL_RenderFillRect(globalRenderer, &playerRect);
 
     // Blocks rendering
     Uint8 r = 0;
@@ -119,19 +120,19 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
                 else {
                     r = 0; g = 255; b = 0;
                 }
-                SDL_SetRenderDrawColor(gRenderer, r, g, b, 255);
+                SDL_SetRenderDrawColor(globalRenderer, r, g, b, 255);
                 SDL_Rect blockRect = { levels[i][j].getX(), levels[i][j].getY(), BLOCK_WIDTH, BLOCK_HEIGHT};
-                SDL_RenderFillRect(gRenderer, &blockRect);
+                SDL_RenderFillRect(globalRenderer, &blockRect);
                 ++k;
             }
         }
     }
 
     //Ball rendering
-    SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
     SDL_Rect ballRect = { ball.getX() - ball.getRadius(), ball.getY() - ball.getRadius(), ball.getRadius() * 2, ball.getRadius() * 2};
-    SDL_RenderFillRect(gRenderer, &ballRect);
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderFillRect(globalRenderer, &ballRect);
+    SDL_RenderPresent(globalRenderer);
 }
 
 // Main function of the game
@@ -171,8 +172,8 @@ void runGame() {
 
 // Free resources and close game
 void close() {
-    SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyRenderer(globalRenderer);
+    SDL_DestroyWindow(globalWindow);
     SDL_Quit();
 }
 

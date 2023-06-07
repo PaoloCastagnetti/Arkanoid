@@ -10,13 +10,13 @@ bool CheckCollisions(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
             if (!levels[i][j].getDestroyed()) {
                 if (ball.getX() < levels[i][j].getX() + BLOCK_WIDTH && ball.getX() + ball.getRadius() * 2 > levels[i][j].getX() &&
                     ball.getY() < levels[i][j].getY() + BLOCK_HEIGHT && ball.getY() + ball.getRadius() * 2 > levels[i][j].getY()) {
-                    // Verifica il lato della collisione
+                    // Check the side of the collision
                     bool touchedTop = ball.getY() + ball.getRadius() * 2 >= levels[i][j].getY() && ball.getY() <= levels[i][j].getY();
                     bool touchedBottom = ball.getY() <= levels[i][j].getY() + BLOCK_HEIGHT && ball.getY() + ball.getRadius() * 2 >= levels[i][j].getY() + BLOCK_HEIGHT;
                     bool touchedLeft = ball.getX() + ball.getRadius() * 2 >= levels[i][j].getX() && ball.getX() <= levels[i][j].getX();
                     bool touchedRight = ball.getX() <= levels[i][j].getX() + BLOCK_WIDTH && ball.getX() + ball.getRadius() * 2 >= levels[i][j].getX() + BLOCK_WIDTH;
 
-                    // Inverti la velocità della pallina in base al lato della collisione
+                    // Reverse the speed of the ball based on the side of the collision
                     if (touchedTop || touchedBottom) {
                         ball.InvertVelY();
                     }
