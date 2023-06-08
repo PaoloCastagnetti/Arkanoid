@@ -10,12 +10,15 @@
 #include "HeaderFiles/Timer.h"
 #include "HeaderFiles/Collisions.h"
 #include "HeaderFiles/Globals.h"
-#include "HeaderFiles/Texture.h"
+#include "HeaderFiles/MGDTexture.h"
 
 // Global variables
 SDL_Window* globalWindow = nullptr;
 SDL_Renderer* globalRenderer = nullptr;
 Mix_Music* globalMusic = nullptr;
+
+//Background
+MGDTexture* backgroundTexture;
 
 // Initialize SDL and the game window
 bool init() {
@@ -79,6 +82,9 @@ bool init() {
         printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
         return false;
     }
+
+    //Initialize background
+    backgroundTexture = new MGDTexture("Assets/Arkanoid_Background.png");
 
     return true;
 }
@@ -147,8 +153,11 @@ bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
 
 // Game objects rendering
 void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
-    SDL_SetRenderDrawColor(globalRenderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(globalRenderer, 0x00, 0x00, 0x00, 0x00);
     SDL_RenderClear(globalRenderer);
+
+    SDL_Rect rectDest = { 0, 0, 600, 600};
+    backgroundTexture->renderCopyEx(&rectDest);
 
     // Player rendering
     SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
@@ -156,22 +165,13 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
     SDL_RenderFillRect(globalRenderer, &playerRect);
 
     // Blocks rendering
-    Uint8 r = 0;
+    Uint8 r = 255;
     Uint8 g = 0;
     Uint8 b = 0;
     int k = 0;
     for (int i = 0; i < NUM_ROWS; ++i) {
         for (int j = 0; j < NUM_BLOCKS; ++j) {
             if (!levels[i][j].getDestroyed()) {
-                if (k < (TOTAL_N_BLOCKS/3)) {
-                    r = 255; g = 0; b = 0;
-                }
-                else if (k < (TOTAL_N_BLOCKS / 3) * 2){
-                    r = 0; g = 0; b = 255;
-                }
-                else {
-                    r = 0; g = 255; b = 0;
-                }
                 SDL_SetRenderDrawColor(globalRenderer, r, g, b, 255);
                 SDL_Rect blockRect = { levels[i][j].getX(), levels[i][j].getY(), BLOCK_WIDTH, BLOCK_HEIGHT};
                 SDL_RenderFillRect(globalRenderer, &blockRect);
@@ -189,9 +189,6 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
 
 // Main function of the game
 void runGame() {
-    
-    //Background creation and rendering
-    Texture* backgroundTexture = new Texture("Assets/Arkanoid_Background.png");
     
     //Player definition
     float player_X = SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2;
@@ -219,10 +216,6 @@ void runGame() {
         quit = update(*player, *ball, levels);
         
         render(*player, *ball, levels);
-
-        SDL_Rect rectDest = { 0, 0, 800, 600 };
-        //backgroundTexture->renderCopyEx(&rectDest);
-        backgroundTexture->render();
     }
 
     delete player;
@@ -238,7 +231,6 @@ void close() {
 }
 
 int main(int argc, char* args[]) {
-    
 
     if (!init()) {
         return -1;

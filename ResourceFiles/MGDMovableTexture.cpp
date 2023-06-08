@@ -1,69 +1,67 @@
-#include "../HeaderFiles/MovableTexture.h"
-#include "../HeaderFiles/Texture.h"
+#include "../HeaderFiles/MGDMovableTexture.h"
 #include "../HeaderFiles/Globals.h"
+#include "../HeaderFiles/MGDTexture.h"
 #include "../HeaderFiles/Constants.h"
 
-MovableTexture::MovableTexture()
+MGDMovableTexture::MGDMovableTexture()
     : _posX(0)
     , _posY(0)
     , _velX(0)
     , _velY(0)
     , _path("Assets/MissingTexture.bmp") {
-    _texture = new Texture();
+    _texture = new MGDTexture();
     if (!_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
-    }
-    else {
+    } else {
         _textureWidth = _texture->getWidth();
         _textureHeight = _texture->getHeight();
     }
 }
 
-MovableTexture::MovableTexture(std::string path)
+MGDMovableTexture::MGDMovableTexture(std::string path)
     : _posX(0)
     , _posY(0)
     , _velX(0)
     , _velY(0)
     , _path(path) {
-    _texture = new Texture();
+    _texture = new MGDTexture();
     if (!_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
-    }
-    else {
+    } else {
         _textureWidth = _texture->getWidth();
         _textureHeight = _texture->getHeight();
     }
 }
 
-MovableTexture::~MovableTexture() {
+MGDMovableTexture::~MGDMovableTexture() {
     // Free loaded images
     _texture->free();
     delete _texture;
 }
 
-void MovableTexture::handleEvent(SDL_Event& sdlEvent) {
+void MGDMovableTexture::handleEvent(SDL_Event& sdlEvent) {
     // If a key was pressed
     if (sdlEvent.type == SDL_KEYDOWN && sdlEvent.key.repeat == 0) {
         // Adjust the velocity
         switch (sdlEvent.key.keysym.sym) {
-        case SDLK_UP:
-        case 'w':
-            _velY -= _velocity;
-            break;
-        case SDLK_DOWN:
-        case 's':
-            _velY += _velocity;
-            break;
-        case SDLK_LEFT:
-        case 'a':
-            _velX -= _velocity;
+            case SDLK_UP:
+            case 'w':
+                _velY -= _velocity;
+                break;
+            case SDLK_DOWN:
+            case 's':
+                _velY += _velocity;
+                break;
+            case SDLK_LEFT:
+            case 'a':
+                _velX -= _velocity;
 
-            break;
-        case SDLK_RIGHT:
-        case 'd':
-            _velX += _velocity;
+                break;
+            case SDLK_RIGHT:
+            case 'd':
+                _velX += _velocity;
 
-            break;
+                break;
         }
     }
     // If a key was released
@@ -71,35 +69,34 @@ void MovableTexture::handleEvent(SDL_Event& sdlEvent) {
         // Adjust the velocity
 
         switch (sdlEvent.key.keysym.sym) {
-        case SDLK_UP:
-        case 'w':
-            _velY += _velocity;
-            break;
-        case SDLK_DOWN:
-        case 's':
-            _velY -= _velocity;
-            break;
-        case SDLK_LEFT:
-        case 'a':
-            _velX += _velocity;
-            break;
-        case SDLK_RIGHT:
-        case 'd':
-            _velX -= _velocity;
-            break;
+            case SDLK_UP:
+            case 'w':
+                _velY += _velocity;
+                break;
+            case SDLK_DOWN:
+            case 's':
+                _velY -= _velocity;
+                break;
+            case SDLK_LEFT:
+            case 'a':
+                _velX += _velocity;
+                break;
+            case SDLK_RIGHT:
+            case 'd':
+                _velX -= _velocity;
+                break;
         }
     }
 }
 
-void MovableTexture::move(double timeStep) {
+void MGDMovableTexture::move(double timeStep) {
     // Move the texture left or right
     _posX += _velX * timeStep;
 
     // If the texture went too far to the left or right
     if (_posX < 0) {
         //_posX = 0;
-    }
-    else if (_posX > SCREEN_WIDTH - _textureWidth) {
+    } else if (_posX > SCREEN_WIDTH - _textureWidth) {
         _posX = SCREEN_WIDTH - _textureWidth;
     }
 
@@ -109,29 +106,28 @@ void MovableTexture::move(double timeStep) {
     // If the texture went too far up or down
     if (_posY < 0) {
         //_posY = 0;
-    }
-    else if (_posY > SCREEN_HEIGHT - _textureHeight) {
+    } else if (_posY > SCREEN_HEIGHT - _textureHeight) {
         _posY = SCREEN_HEIGHT - _textureHeight;
     }
 }
 
-void MovableTexture::render() {
+void MGDMovableTexture::render() {
     // Show the texture
     _texture->render((int)_posX, (int)_posY);
 }
 
 // Sets the position of this texture (0,0 is the top left)
-void MovableTexture::setPosX(double posX) {
+void MGDMovableTexture::setPosX(double posX) {
     _posX = posX;
 }
-void MovableTexture::setPosY(double posY) {
+void MGDMovableTexture::setPosY(double posY) {
     _posY = posY;
 }
 
 // Gets the position of this texture (0,0 is the top left)
-const double MovableTexture::getPosX() {
+const double MGDMovableTexture::getPosX() {
     return _posX;
 }
-const double MovableTexture::getPosY() {
+const double MGDMovableTexture::getPosY() {
     return _posY;
 }

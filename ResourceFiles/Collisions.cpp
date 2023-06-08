@@ -36,10 +36,10 @@ bool CheckCollisions(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
     }
 
     //Verify collisions between Screen and Ball
-    if (ball.getX() - ball.getRadius() < 0 || ball.getX() + ball.getRadius() > SCREEN_WIDTH) {
+    if (ball.getX() - ball.getRadius() < 22 || ball.getX() + ball.getRadius() > SCREEN_WIDTH-22) {
         ball.InvertVelX();
     }
-    if (ball.getY() - ball.getRadius() < 0 ) {
+    if (ball.getY() - ball.getRadius() < 22 ) {
         ball.InvertVelY();
     }
     if (ball.getY() + ball.getRadius() > SCREEN_HEIGHT) {

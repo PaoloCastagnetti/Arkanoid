@@ -1,45 +1,42 @@
-#include "../HeaderFiles/Texture.h"
+#include "../HeaderFiles/MGDTexture.h"
 #include "../HeaderFiles/Globals.h"
-#include "../HeaderFiles/Constants.h"
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-
-Texture::Texture() {
+MGDTexture::MGDTexture() {
     // Initialize
-    this->_texture = NULL;
-    this->_width = 0;
-    this->_height = 0;
+    _texture = NULL;
+    _width = 0;
+    _height = 0;
 
-    this->_surfacePixels = NULL;
-    this->_rawPixels = NULL;
-    this->_rawPitch = 0;
+    _surfacePixels = NULL;
+    _rawPixels = NULL;
+    _rawPitch = 0;
 }
 
-Texture::Texture(std::string path) {
+MGDTexture::MGDTexture(std::string path) {
     // Initialize
-    this->_texture = NULL;
-    this->_width = 0;
-    this->_height = 0;
+    _texture = NULL;
+    _width = 0;
+    _height = 0;
 
-    this->_surfacePixels = NULL;
-    this->_rawPixels = NULL;
-    this->_rawPitch = 0;
+    _surfacePixels = NULL;
+    _rawPixels = NULL;
+    _rawPitch = 0;
 
     loadFromFile(path);
 }
 
-Texture::~Texture() {
+MGDTexture::~MGDTexture() {
     // Deallocate existing assets
     free();
 }
 
-bool Texture::loadFromFile(std::string path) {
+bool MGDTexture::loadFromFile(std::string path) {
     // Load pixels
     if (!loadPixelsFromFile(path)) {
         printf("Failed to load pixels for %s!\n", path.c_str());
-    }
-    else {
+    } else {
         // Load texture from pixels
         if (!loadFromPixels()) {
             printf("Failed to texture from pixels from %s!\n", path.c_str());
@@ -50,7 +47,7 @@ bool Texture::loadFromFile(std::string path) {
     return _texture != NULL;
 }
 
-bool Texture::loadPixelsFromFile(std::string path) {
+bool MGDTexture::loadPixelsFromFile(std::string path) {
     // Free preexisting assets
     free();
 
@@ -58,14 +55,12 @@ bool Texture::loadPixelsFromFile(std::string path) {
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == NULL) {
         printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-    }
-    else {
+    } else {
         // Convert surface to display format
         _surfacePixels = SDL_ConvertSurfaceFormat(loadedSurface, SDL_PIXELFORMAT_RGBA8888, 0);
         if (_surfacePixels == NULL) {
             printf("Unable to convert loaded surface to display format! SDL Error: %s\n", SDL_GetError());
-        }
-        else {
+        } else {
             // Get image dimensions
             _width = _surfacePixels->w;
             _height = _surfacePixels->h;
@@ -78,12 +73,11 @@ bool Texture::loadPixelsFromFile(std::string path) {
     return _surfacePixels != NULL;
 }
 
-bool Texture::loadFromPixels() {
+bool MGDTexture::loadFromPixels() {
     // Only load if pixels exist
     if (_surfacePixels == NULL) {
         printf("No pixels loaded!");
-    }
-    else {
+    } else {
         // Color key image
         SDL_SetColorKey(_surfacePixels, SDL_TRUE, SDL_MapRGB(_surfacePixels->format, 0, 0xFF, 0xFF));
 
@@ -91,8 +85,7 @@ bool Texture::loadFromPixels() {
         _texture = SDL_CreateTextureFromSurface(globalRenderer, _surfacePixels);
         if (_texture == NULL) {
             printf("Unable to create texture from loaded pixels! SDL Error: %s\n", SDL_GetError());
-        }
-        else {
+        } else {
             // Get image dimensions
             _width = _surfacePixels->w;
             _height = _surfacePixels->h;
@@ -107,7 +100,7 @@ bool Texture::loadFromPixels() {
     return _texture != NULL;
 }
 
-bool Texture::createBlank(int width, int height, SDL_TextureAccess access) {
+bool MGDTexture::createBlank(int width, int height, SDL_TextureAccess access) {
     // Get rid of preexisting texture
     free();
 
@@ -115,8 +108,7 @@ bool Texture::createBlank(int width, int height, SDL_TextureAccess access) {
     _texture = SDL_CreateTexture(globalRenderer, SDL_PIXELFORMAT_RGBA8888, access, width, height);
     if (_texture == NULL) {
         printf("Unable to create streamable blank texture! SDL Error: %s\n", SDL_GetError());
-    }
-    else {
+    } else {
         _width = width;
         _height = height;
     }
@@ -124,7 +116,7 @@ bool Texture::createBlank(int width, int height, SDL_TextureAccess access) {
     return _texture != NULL;
 }
 
-void Texture::free() {
+void MGDTexture::free() {
     // Free texture if it exists
     if (_texture != NULL) {
         SDL_DestroyTexture(_texture);
@@ -140,24 +132,24 @@ void Texture::free() {
     }
 }
 
-void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
+void MGDTexture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
     // Modulate texture rgb
     SDL_SetTextureColorMod(_texture, red, green, blue);
 }
 
-void Texture::setBlendMode(SDL_BlendMode blending) {
+void MGDTexture::setBlendMode(SDL_BlendMode blending) {
     // Set blending function
     SDL_SetTextureBlendMode(_texture, blending);
 }
 
-void Texture::setAlpha(Uint8 alpha) {
+void MGDTexture::setAlpha(Uint8 alpha) {
     // Modulate texture alpha
     SDL_SetTextureAlphaMod(_texture, alpha);
 }
 
-void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void MGDTexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
     // Set rendering space and render to screen
-    SDL_Rect renderQuad = { x, y, _width, _height };
+    SDL_Rect renderQuad = {x, y, _width, _height};
 
     // Set clip rendering dimensions
     if (clip != NULL) {
@@ -169,25 +161,25 @@ void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* cent
     SDL_RenderCopyEx(globalRenderer, _texture, clip, &renderQuad, angle, center, flip);
 }
 
-void Texture::renderCopyEx(SDL_Rect* destinationRect, SDL_Rect* clipRect, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void MGDTexture::renderCopyEx(SDL_Rect* destinationRect, SDL_Rect* clipRect, double angle, SDL_Point* center, SDL_RendererFlip flip) {
     // Render to screen
     SDL_RenderCopyEx(globalRenderer, _texture, clipRect, destinationRect, angle, center, flip);
 }
 
-void Texture::setAsRenderTarget() {
+void MGDTexture::setAsRenderTarget() {
     // Make self render target
     SDL_SetRenderTarget(globalRenderer, _texture);
 }
 
-int Texture::getWidth() {
+int MGDTexture::getWidth() {
     return _width;
 }
 
-int Texture::getHeight() {
+int MGDTexture::getHeight() {
     return _height;
 }
 
-Uint32* Texture::getPixels32() {
+Uint32* MGDTexture::getPixels32() {
     Uint32* pixels = NULL;
 
     if (_surfacePixels != NULL) {
@@ -197,7 +189,7 @@ Uint32* Texture::getPixels32() {
     return pixels;
 }
 
-Uint32 Texture::getPixel32(Uint32 x, Uint32 y) {
+Uint32 MGDTexture::getPixel32(Uint32 x, Uint32 y) {
     // Convert the pixels to 32 bit
     Uint32* pixels = static_cast<Uint32*>(_surfacePixels->pixels);
 
@@ -205,7 +197,7 @@ Uint32 Texture::getPixel32(Uint32 x, Uint32 y) {
     return pixels[(y * getPitch32()) + x];
 }
 
-Uint32 Texture::getPitch32() {
+Uint32 MGDTexture::getPitch32() {
     Uint32 pitch = 0;
 
     if (_surfacePixels != NULL) {
@@ -215,7 +207,7 @@ Uint32 Texture::getPitch32() {
     return pitch;
 }
 
-bool Texture::lockTexture() {
+bool MGDTexture::lockTexture() {
     bool success = true;
 
     // Texture is already locked
@@ -234,7 +226,7 @@ bool Texture::lockTexture() {
     return success;
 }
 
-bool Texture::unlockTexture() {
+bool MGDTexture::unlockTexture() {
     bool success = true;
 
     // Texture is not locked
@@ -252,7 +244,7 @@ bool Texture::unlockTexture() {
     return success;
 }
 
-void Texture::copyRawPixels32(void* pixels) {
+void MGDTexture::copyRawPixels32(void* pixels) {
     // Texture is locked
     if (_rawPixels != NULL) {
         // Copy to locked pixels

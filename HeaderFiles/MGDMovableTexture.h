@@ -1,19 +1,20 @@
 #pragma once
 
 #include <SDL.h>
+
 #include <string>
 
 // The texture that will move around on the screen
-class MovableTexture {
+class MGDMovableTexture {
 public:
     // Initializes the variables
-    MovableTexture();
+    MGDMovableTexture();
 
     // Initializes the variables and tries to load a texture from the path
-    MovableTexture(std::string path);
+    MGDMovableTexture(std::string path);
 
     // Deinitializes the variables
-    ~MovableTexture();
+    ~MGDMovableTexture();
 
     // Takes key presses and adjusts the texture's velocity
     void handleEvent(SDL_Event& sdlEvent);
@@ -44,7 +45,7 @@ private:
     int _velocity = 200;
 
     // Scene textures
-    class Texture* _texture;
+    class MGDTexture* _texture;
 
     std::string _path;
 };
