@@ -8,7 +8,7 @@ const int SCREEN_HEIGHT = 600;
 // Costants for the game bar
 const float PLAYER_WIDTH = 100.f;
 const float PLAYER_HEIGHT = 10.f;
-const float PLAYER_SPEED = 25.f;
+const float PLAYER_SPEED = 20.f;
 
 // Costants for the blocks
 const int BLOCK_WIDTH = 58;

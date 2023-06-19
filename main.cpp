@@ -42,7 +42,7 @@ bool init() {
     Uint32 windowFlags = SDL_WindowFlags::SDL_WINDOW_SHOWN;
 
     // Create window
-    globalWindow = SDL_CreateWindow("MGD Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
+    globalWindow = SDL_CreateWindow("ARKANOID", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
     if (globalWindow == NULL) {
         printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
         return false;
@@ -136,18 +136,14 @@ void handleInput(Player& player) {
 
 // Game update
 bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
-    
-    Timer stepTimer;
-    // Get the delta time in milliseconds
-    Uint32 deltaTime = stepTimer.getTicks();
-    // Calculate the delta time in seconds
-    double deltaTimeF = deltaTime * 0.001;
+    bool dead = false;
 
-    // Restart step timer
-    stepTimer.start();
+    handleInput(player);
 
-    bool dead = CheckCollisions(player, ball, levels);
+    dead = CheckCollisions(player, ball, levels);
+
     ball.Update();
+
     return dead;
 }
 
@@ -160,22 +156,22 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
     backgroundTexture->renderCopyEx(&rectDest);
 
     // Player rendering
-    SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
-    SDL_Rect playerRect = { player.getX(), player.getY(), player.getWidth(), player.getHeight()};
-    SDL_RenderFillRect(globalRenderer, &playerRect);
+    player.render();
+    //SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
+    //SDL_Rect playerRect = { player.getX(), player.getY(), player.getWidth(), player.getHeight()};
+    //SDL_RenderFillRect(globalRenderer, &playerRect);
 
     // Blocks rendering
-    Uint8 r = 255;
-    Uint8 g = 0;
-    Uint8 b = 0;
-    int k = 0;
+    //Uint8 r = 255;
+    //Uint8 g = 0;
+    //Uint8 b = 0;
     for (int i = 0; i < NUM_ROWS; ++i) {
         for (int j = 0; j < NUM_BLOCKS; ++j) {
             if (!levels[i][j].getDestroyed()) {
-                SDL_SetRenderDrawColor(globalRenderer, r, g, b, 255);
-                SDL_Rect blockRect = { levels[i][j].getX(), levels[i][j].getY(), BLOCK_WIDTH, BLOCK_HEIGHT};
-                SDL_RenderFillRect(globalRenderer, &blockRect);
-                ++k;
+                levels[i][j].render();
+                //SDL_SetRenderDrawColor(globalRenderer, r, g, b, 255);
+                //SDL_Rect blockRect = { levels[i][j].getX(), levels[i][j].getY(), BLOCK_WIDTH, BLOCK_HEIGHT};
+                //SDL_RenderFillRect(globalRenderer, &blockRect);
             }
         }
     }
@@ -184,6 +180,7 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
     SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
     SDL_Rect ballRect = { ball.getX() - ball.getRadius(), ball.getY() - ball.getRadius(), ball.getRadius() * 2, ball.getRadius() * 2};
     SDL_RenderFillRect(globalRenderer, &ballRect);
+    // Update screen
     SDL_RenderPresent(globalRenderer);
 }
 
@@ -193,10 +190,8 @@ void runGame() {
     //Player definition
     float player_X = SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2;
     float player_Y = SCREEN_HEIGHT - PLAYER_HEIGHT - 10;
-    float player_W = PLAYER_WIDTH;
-    float player_H = PLAYER_HEIGHT;
     float player_S = PLAYER_SPEED;
-    Player* player = new Player(player_X, player_Y, player_W, player_H, player_S);
+    Player* player = new Player(player_X, player_Y, player_S, "Assets/Arkanoid_Character.png");
 
     //Ball definition
     float ballX = SCREEN_WIDTH / 2;
@@ -207,12 +202,19 @@ void runGame() {
     Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY);
 
     Block levels[NUM_ROWS][NUM_BLOCKS];
+
+    for (int i = 0; i < NUM_ROWS; i++) {
+        for (int j = 0; j < NUM_BLOCKS; j++) {
+            levels[i][j] = Block();  // Inizializza ogni elemento con un oggetto di default
+        }
+    }
+
     loadLevels(levels);
 
     bool quit = false;
 
     while (!quit) {
-        handleInput(*player);
+        
         quit = update(*player, *ball, levels);
         
         render(*player, *ball, levels);
@@ -235,7 +237,6 @@ int main(int argc, char* args[]) {
     if (!init()) {
         return -1;
     }
-
     runGame();
 
     close();

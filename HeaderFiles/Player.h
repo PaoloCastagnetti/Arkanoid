@@ -1,12 +1,15 @@
 #pragma once
+#include <SDL.h>
+#include <string>
 class Player {
 
 public:
 
     //Constructors
     Player();
-    Player(float X, float Y, float Width, float Height, float Speed);
+    Player(float X, float Y, float Speed, std::string path);
     Player(const Player& player);
+    ~Player();
 
     //Getters
     float getX();
@@ -22,10 +25,19 @@ public:
     void setHeight(float Height);
     void setSpeed(float Speed);
 
+    //Methods
+    void handleEvent(SDL_Event& sdlEvent);
+    void move(double timeStep);
+    void render();
+
 private:
     float x;
     float y;
+    float _velX;
     float width;
     float height;
     float speed;
+
+    class MGDTexture* _texture;
+    std::string _path;
 };
