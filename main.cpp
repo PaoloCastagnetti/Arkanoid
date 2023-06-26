@@ -191,11 +191,10 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
             }
         }
     }
-
+    
     //Ball rendering
-    SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
-    SDL_Rect ballRect = { ball.getX() - ball.getRadius(), ball.getY() - ball.getRadius(), ball.getRadius() * 2, ball.getRadius() * 2};
-    SDL_RenderFillRect(globalRenderer, &ballRect);
+    ball.render();
+
     // Update screen
     SDL_RenderPresent(globalRenderer);
 }
@@ -212,10 +211,10 @@ void runGame() {
     //Ball definition
     float ballX = SCREEN_WIDTH / 2;
     float ballY = SCREEN_HEIGHT / 2; 
-    float ballRadius = 5;
+    float ballRadius = 12;
     float ballVelX = 0.05;
     float ballVelY = 0.05;
-    Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY);
+    Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY, "Assets/Arkanoid_RedBall.png");
 
     Block levels[NUM_ROWS][NUM_BLOCKS];
 

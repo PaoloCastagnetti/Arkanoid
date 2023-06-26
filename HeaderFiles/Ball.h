@@ -1,12 +1,15 @@
 #pragma once
+#include <SDL.h>
+#include <string>
 class Ball {
 
 public:
 
 	//Constructors
 	Ball();
-	Ball(float X, float Y, float Radius, float VelocityX, float VelocityY);
+	Ball(float X, float Y, float Radius, float VelocityX, float VelocityY, std::string path);
 	Ball(const Ball& ball);
+	~Ball();
 
 	//Getters
 	float getX();
@@ -26,6 +29,7 @@ public:
 	void Update();
 	void InvertVelX();
 	void InvertVelY();
+	void render();
 
 private:
 	float x;
@@ -33,4 +37,7 @@ private:
 	float radius;
 	float velocityX;
 	float velocityY;
+
+	class MGDTexture* _texture;
+	std::string _path;
 };

@@ -1,4 +1,5 @@
 #include "../HeaderFiles/Ball.h"
+#include "../HeaderFiles/MGDTexture.h"
 #include "../HeaderFiles/Constants.h"
 
 //Constructors
@@ -8,13 +9,29 @@ Ball::Ball(){
 	this->radius = 0;
 	this->velocityX = 0;
 	this->velocityY = 0;
+	this->_path = "";
+	_texture = new MGDTexture();
+	if (!_texture->loadFromFile(_path)) {
+		printf("Failed to load the texture!\n");
+	}
+	else {
+		this->radius = _texture->getWidth()/2;
+	}
 }
-Ball::Ball(float X, float Y, float Radius, float VelocityX, float VelocityY){
+Ball::Ball(float X, float Y, float Radius, float VelocityX, float VelocityY, std::string path){
 	this->x = X;
 	this->y = Y;
 	this->radius = Radius;
 	this->velocityX = VelocityX;
 	this->velocityY = VelocityY;
+	this->_path = path;
+	_texture = new MGDTexture();
+	if (!_texture->loadFromFile(_path)) {
+		printf("Failed to load the texture!\n");
+	}
+	else {
+		this->radius = _texture->getWidth()/2;
+	}
 }
 Ball::Ball(const Ball& ball){
 	this->x = ball.x;
@@ -22,6 +39,18 @@ Ball::Ball(const Ball& ball){
 	this->radius = ball.radius;
 	this->velocityX = ball.velocityX;
 	this->velocityY = ball.velocityY;
+	this->_path = ball._path;
+	_texture = new MGDTexture();
+	if (!_texture->loadFromFile(_path)) {
+		printf("Failed to load the texture!\n");
+	}
+	else {
+		this->radius = _texture->getWidth()/2;
+	}
+}
+Ball::~Ball() {
+	_texture->free();
+	delete _texture;
 }
 
 //Getters
@@ -69,4 +98,9 @@ void Ball::InvertVelX() {
 
 void Ball::InvertVelY() {
 	this->velocityY = -this->velocityY;
+}
+
+void Ball::render() {
+	// Show the texture
+	_texture->render((int)this->getX(), (int)this->getY());
 }
