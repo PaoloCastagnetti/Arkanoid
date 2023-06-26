@@ -11,6 +11,7 @@
 #include "HeaderFiles/Collisions.h"
 #include "HeaderFiles/Globals.h"
 #include "HeaderFiles/MGDTexture.h"
+#include "Functions.h"
 
 // Global variables
 SDL_Window* globalWindow = nullptr;
@@ -91,11 +92,35 @@ bool init() {
 
 // Carica i livelli di gioco
 void loadLevels(Block levels[][NUM_BLOCKS]) {
+    std::string path;
+    int tmp_val = 0;
     // Livello 1
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_BLOCKS; j++) {
             levels[i][j].setX(j * (BLOCK_WIDTH + 10) + 50);
             levels[i][j].setY(i * (BLOCK_HEIGHT + 10) + 50);
+            tmp_val = RandomNumForBlock(1,3);
+            switch (tmp_val) {
+            case 1:
+                path = YELLOW_BLOCK;
+                break;
+            case 2:
+                path = GREEN_BLOCK;
+                break;
+            case 3:
+                path = ORANGE_BLOCK;
+                break;
+            case 4:
+                path = BLU_BLOCK;
+                break;
+            case 5:
+                path = RED_BLOCK;
+                break;
+            default:
+                printf("Error: Block color assignment");
+                break;
+            }
+            levels[i][j].setTexture(path);
             levels[i][j].setDestroyed(false);
         }
     }
@@ -214,14 +239,14 @@ void runGame() {
     delete player;
     delete ball;
     delete backgroundTexture;
-    /*
+    
     // Deallocation of rows
     for (int i = 0; i < NUM_ROWS; i++) {
         delete[] levels[i];
     }
     // Deallocation of main array
     delete[] levels;
-    */
+    
 }
 
 // Free resources and close game

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceFiles\Ball.cpp" />
     <ClCompile Include="ResourceFiles\Block.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="ResourceFiles\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="HeaderFiles\Ball.h" />
     <ClInclude Include="HeaderFiles\Block.h" />
     <ClInclude Include="HeaderFiles\Collisions.h" />

@@ -10,13 +10,6 @@ Block::Block() {
 	this->height = BLOCK_HEIGHT;
 	this->destroyed = false;
 	this->_texture = new MGDTexture();
-	if (!this->_texture->loadFromFile("Assets/Blocks/Arkanoid_BluBlock.png")) {
-		printf("Failed to load the texture!\n");
-	}
-	else {
-		this->width = this->_texture->getWidth();
-		this->height = this->_texture->getHeight();
-	}
 }
 Block::Block(int X, int Y, bool Destroyed, std::string path) {
 	this->x = X;
@@ -94,6 +87,7 @@ void Block::render() {
 	_texture->render(this->getX(), this->getY());
 }
 void Block::setTexture(std::string _path) {
+	this->_texture->free();
 	this->_texture = new MGDTexture();
 	if (!this->_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
