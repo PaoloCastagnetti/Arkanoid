@@ -10,7 +10,7 @@ Block::Block() {
 	this->height = BLOCK_HEIGHT;
 	this->destroyed = false;
 	this->_texture = new MGDTexture();
-	if (!this->_texture->loadFromFile("Assets/ArkanoidGoldenBlock.png")) {
+	if (!this->_texture->loadFromFile("Assets/Blocks/Arkanoid_BluBlock.png")) {
 		printf("Failed to load the texture!\n");
 	}
 	else {
@@ -48,6 +48,11 @@ Block::Block(const Block& block) {
 		this->height = this->_texture->getHeight();
 	}
 }
+/*
+Block::~Block() {
+	_texture->free();
+	delete this->_texture;
+}*/
 
 //Getters
 int Block::getX() {

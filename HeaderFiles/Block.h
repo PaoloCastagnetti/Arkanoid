@@ -10,6 +10,7 @@ public:
     Block();
     Block(int X, int Y, bool Destroyed, std::string path);
     Block(const Block& block);
+    //~Block();
 
     //Getters
     int getX();

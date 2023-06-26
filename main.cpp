@@ -94,8 +94,8 @@ void loadLevels(Block levels[][NUM_BLOCKS]) {
     // Livello 1
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_BLOCKS; j++) {
-            levels[i][j].setX(j * (BLOCK_WIDTH + 5) + 50);
-            levels[i][j].setY(i * (BLOCK_HEIGHT + 5) + 50);
+            levels[i][j].setX(j * (BLOCK_WIDTH + 10) + 50);
+            levels[i][j].setY(i * (BLOCK_HEIGHT + 10) + 50);
             levels[i][j].setDestroyed(false);
         }
     }
@@ -157,21 +157,12 @@ void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
 
     // Player rendering
     player.render();
-    //SDL_SetRenderDrawColor(globalRenderer, 255, 255, 255, 255);
-    //SDL_Rect playerRect = { player.getX(), player.getY(), player.getWidth(), player.getHeight()};
-    //SDL_RenderFillRect(globalRenderer, &playerRect);
 
     // Blocks rendering
-    //Uint8 r = 255;
-    //Uint8 g = 0;
-    //Uint8 b = 0;
     for (int i = 0; i < NUM_ROWS; ++i) {
         for (int j = 0; j < NUM_BLOCKS; ++j) {
             if (!levels[i][j].getDestroyed()) {
                 levels[i][j].render();
-                //SDL_SetRenderDrawColor(globalRenderer, r, g, b, 255);
-                //SDL_Rect blockRect = { levels[i][j].getX(), levels[i][j].getY(), BLOCK_WIDTH, BLOCK_HEIGHT};
-                //SDL_RenderFillRect(globalRenderer, &blockRect);
             }
         }
     }
@@ -191,7 +182,7 @@ void runGame() {
     float player_X = SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2;
     float player_Y = SCREEN_HEIGHT - PLAYER_HEIGHT - 10;
     float player_S = PLAYER_SPEED;
-    Player* player = new Player(player_X, player_Y, player_S, "Assets/Arkanoid_Character.png");
+    Player* player = new Player(player_X, player_Y, player_S, "Assets/Bars/Arkanoid_LongBar.png");
 
     //Ball definition
     float ballX = SCREEN_WIDTH / 2;
@@ -223,6 +214,14 @@ void runGame() {
     delete player;
     delete ball;
     delete backgroundTexture;
+    /*
+    // Deallocation of rows
+    for (int i = 0; i < NUM_ROWS; i++) {
+        delete[] levels[i];
+    }
+    // Deallocation of main array
+    delete[] levels;
+    */
 }
 
 // Free resources and close game
