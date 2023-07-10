@@ -90,57 +90,6 @@ bool init() {
     return true;
 }
 
-// Carica i livelli di gioco
-void loadLevels(Block** levels, int currentLevel) {
-    std::string path;
-    int tmp_val = 0;
-
-    int start=0, range=0;
-    if (currentLevel == 0) {
-        start = 1;
-        range = 3;
-    }
-    else if (currentLevel == 1) {
-        start = 2;
-        range = 4;
-    }
-    else if (currentLevel == 2) {
-        start = 3;
-        range = 5;
-    }
-
-
-    for (int i = 0; i < NUM_ROWS; i++) {
-        for (int j = 0; j < NUM_BLOCKS; j++) {
-            levels[i][j].setX(j * (BLOCK_WIDTH + 10) + 50);
-            levels[i][j].setY(i * (BLOCK_HEIGHT + 10) + 50);
-            tmp_val = RandomNumForBlock(start, range);
-            switch (tmp_val) {
-            case 1:
-                path = YELLOW_BLOCK;
-                break;
-            case 2:
-                path = GREEN_BLOCK;
-                break;
-            case 3:
-                path = ORANGE_BLOCK;
-                break;
-            case 4:
-                path = BLU_BLOCK;
-                break;
-            case 5:
-                path = RED_BLOCK;
-                break;
-            default:
-                printf("Error: Block color assignment");
-                break;
-            }
-            levels[i][j].setTexture(path);
-            levels[i][j].setDestroyed(false);
-        }
-    }
-}
-
 // Gestisci l'input del giocatore
 void handleInput(Player& player) {
     SDL_Event e;
@@ -221,8 +170,8 @@ void runGame() {
     float ballX = SCREEN_WIDTH / 2;
     float ballY = SCREEN_HEIGHT / 2; 
     float ballRadius = 12;
-    float ballVelX = 0.05;
-    float ballVelY = 0.05;
+    float ballVelX = 0.05f;
+    float ballVelY = 0.05f;
     Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY, "Assets/Arkanoid_RedBall.png");
 
     int currentLevel = 0; // Indice del livello corrente
@@ -254,14 +203,18 @@ void runGame() {
                 loadLevels(levels, currentLevel);
                 
                 resetPositions(*player, *ball);
-                ball->setVelocityX(0.05);
-                ball->setVelocityY(0.05);
 
                 if (currentLevel == 1) {
                     texturePath = "Assets/Bars/Arkanoid_MediumBar.png";
+                    ball->setVelocityX(0.06f);
+                    ball->setVelocityY(0.06f);
+                    player->setSpeed(22.5f);
                 }
                 else if (currentLevel == 2) {
                     texturePath = "Assets/Bars/Arkanoid_ShortBar.png";
+                    ball->setVelocityX(0.07f);
+                    ball->setVelocityY(0.07f);
+                    player->setSpeed(25.f);
                 }
                 player->setTexture(texturePath);
             }
