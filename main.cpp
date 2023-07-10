@@ -91,7 +91,7 @@ bool init() {
 }
 
 // Carica i livelli di gioco
-void loadLevels(Block levels[][NUM_BLOCKS]) {
+void loadLevels(Block** levels) {
     std::string path;
     int tmp_val = 0;
     // Livello 1
@@ -160,7 +160,7 @@ void handleInput(Player& player) {
 }
 
 // Game update
-bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
+bool update(Player& player, Ball& ball, Block** levels) {
     bool dead = false;
 
     handleInput(player);
@@ -173,7 +173,7 @@ bool update(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
 }
 
 // Game objects rendering
-void render(Player& player, Ball& ball, Block levels [][NUM_BLOCKS]) {
+void render(Player& player, Ball& ball, Block** levels) {
     SDL_SetRenderDrawColor(globalRenderer, 0x00, 0x00, 0x00, 0x00);
     SDL_RenderClear(globalRenderer);
 
@@ -216,12 +216,11 @@ void runGame() {
     float ballVelY = 0.05;
     Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY, "Assets/Arkanoid_RedBall.png");
 
-    Block levels[NUM_ROWS][NUM_BLOCKS];
+    //Block levels[NUM_ROWS][NUM_BLOCKS];
 
+    Block** levels = new Block * [NUM_ROWS];
     for (int i = 0; i < NUM_ROWS; i++) {
-        for (int j = 0; j < NUM_BLOCKS; j++) {
-            levels[i][j] = Block();  // Inizializza ogni elemento con un oggetto di default
-        }
+        levels[i] = new Block[NUM_BLOCKS];
     }
 
     loadLevels(levels);

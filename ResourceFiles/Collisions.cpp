@@ -2,7 +2,7 @@
 #include "../HeaderFiles/Constants.h"
 #include <stdio.h>
 
-bool CheckCollisions(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
+bool CheckCollisions(Player& player, Ball& ball, Block** levels) {
 
     //Verify collisions between Blocks and Ball
     for (int i = 0; i < NUM_ROWS; i++) {
@@ -47,5 +47,4 @@ bool CheckCollisions(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]) {
         printf("MORTO");
     }
     return false;
-
 }

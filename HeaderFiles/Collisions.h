@@ -4,4 +4,4 @@
 #include "Ball.h"
 #include "Constants.h"
 
-bool CheckCollisions(Player& player, Ball& ball, Block levels[][NUM_BLOCKS]);
+bool CheckCollisions(Player& player, Ball& ball, Block** levels);
