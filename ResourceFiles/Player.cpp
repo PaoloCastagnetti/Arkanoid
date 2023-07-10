@@ -135,3 +135,15 @@ void Player::render() {
     // Show the texture
     _texture->render((int)this->getX(), (int)this->getY());
 }
+
+void Player::setTexture(std::string _path) {
+    this->_texture->free();
+    this->_texture = new MGDTexture();
+    if (!this->_texture->loadFromFile(_path)) {
+        printf("Failed to load the texture!\n");
+    }
+    else {
+        this->width = this->_texture->getWidth();
+        this->height = this->_texture->getHeight();
+    }
+}

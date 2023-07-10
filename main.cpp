@@ -91,15 +91,30 @@ bool init() {
 }
 
 // Carica i livelli di gioco
-void loadLevels(Block** levels) {
+void loadLevels(Block** levels, int currentLevel) {
     std::string path;
     int tmp_val = 0;
-    // Livello 1
+
+    int start=0, range=0;
+    if (currentLevel == 0) {
+        start = 1;
+        range = 3;
+    }
+    else if (currentLevel == 1) {
+        start = 2;
+        range = 4;
+    }
+    else if (currentLevel == 2) {
+        start = 3;
+        range = 5;
+    }
+
+
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_BLOCKS; j++) {
             levels[i][j].setX(j * (BLOCK_WIDTH + 10) + 50);
             levels[i][j].setY(i * (BLOCK_HEIGHT + 10) + 50);
-            tmp_val = RandomNumForBlock(1,3);
+            tmp_val = RandomNumForBlock(start, range);
             switch (tmp_val) {
             case 1:
                 path = YELLOW_BLOCK;
@@ -124,12 +139,6 @@ void loadLevels(Block** levels) {
             levels[i][j].setDestroyed(false);
         }
     }
-
-    // Livello 2
-    // ...
-
-    // Livello 3
-    // ...
 }
 
 // Gestisci l'input del giocatore
@@ -216,14 +225,15 @@ void runGame() {
     float ballVelY = 0.05;
     Ball* ball = new Ball(ballX, ballY, ballRadius, ballVelX, ballVelY, "Assets/Arkanoid_RedBall.png");
 
-    //Block levels[NUM_ROWS][NUM_BLOCKS];
+    int currentLevel = 0; // Indice del livello corrente
+    std::string texturePath;
 
     Block** levels = new Block * [NUM_ROWS];
     for (int i = 0; i < NUM_ROWS; i++) {
         levels[i] = new Block[NUM_BLOCKS];
     }
 
-    loadLevels(levels);
+    loadLevels(levels, currentLevel);
 
     bool quit = false;
 
@@ -232,6 +242,30 @@ void runGame() {
         quit = update(*player, *ball, levels);
         
         render(*player, *ball, levels);
+
+        if (allBlocksDestroyed(levels)) {
+            // Get to the next level
+            ++currentLevel;
+            if (currentLevel > 2) {
+                // Hai completato tutti i livelli, fai qualcosa come mostrare un messaggio di vittoria o ricominciare dal primo livello
+            }
+            else {
+                // Load new level
+                loadLevels(levels, currentLevel);
+                
+                resetPositions(*player, *ball);
+                ball->setVelocityX(0.05);
+                ball->setVelocityY(0.05);
+
+                if (currentLevel == 1) {
+                    texturePath = "Assets/Bars/Arkanoid_MediumBar.png";
+                }
+                else if (currentLevel == 2) {
+                    texturePath = "Assets/Bars/Arkanoid_ShortBar.png";
+                }
+                player->setTexture(texturePath);
+            }
+        }
     }
 
     delete player;
