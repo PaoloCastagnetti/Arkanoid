@@ -9,3 +9,4 @@ int RandomNumForBlock(int first, int last);
 bool allBlocksDestroyed(Block** levels);
 void resetPositions(Player& player, Ball& ball);
 void loadLevels(Block** levels, int currentLevel);
+void handleInput(Player& player);

@@ -89,33 +89,6 @@ bool init() {
     return true;
 }
 
-// Gestisci l'input del giocatore
-void handleInput(Player& player) {
-    SDL_Event e;
-    while (SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_QUIT) {
-            // L'utente ha chiuso la finestra
-            exit(0);
-        }
-        else if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-            case SDLK_LEFT:
-                player.setX(player.getX() - player.getSpeed());
-                if (player.getX() < 0) {
-                    player.setX(0);
-                }
-                break;
-            case SDLK_RIGHT:
-                player.setX(player.getX() + player.getSpeed());
-                if (player.getX() + player.getWidth() > SCREEN_WIDTH) {
-                    player.setX(SCREEN_WIDTH - player.getWidth());
-                }
-                break;
-            }
-        }
-    }
-}
-
 // Game update
 bool update(Player& player, Ball& ball, Block** levels) {
     bool dead = false;
