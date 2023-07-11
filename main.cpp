@@ -7,7 +7,6 @@
 #include "HeaderFiles/Ball.h"
 #include "HeaderFiles/Block.h"
 #include "HeaderFiles/Constants.h"
-#include "HeaderFiles/Timer.h"
 #include "HeaderFiles/Collisions.h"
 #include "HeaderFiles/Globals.h"
 #include "HeaderFiles/MGDTexture.h"
