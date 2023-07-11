@@ -27,7 +27,6 @@ public:
 
     //Methods
     void handleEvent(SDL_Event& sdlEvent);
-    void move(double timeStep);
     void render();
     void setTexture(std::string _path);
 
