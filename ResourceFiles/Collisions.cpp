@@ -1,7 +1,20 @@
+/**
+ * @file Collisions.cpp
+ * @brief Implementation file for collision detection functions.
+ */
+
 #include "../HeaderFiles/Collisions.h"
 #include "../HeaderFiles/Constants.h"
 #include <stdio.h>
 
+ /**
+  * @brief Checks for collisions between the player, ball, and blocks.
+  * Updates the ball's velocity and destroys blocks if there is a collision.
+  * @param player The player object.
+  * @param ball The ball object.
+  * @param levels The array of blocks.
+  * @return True if the ball has collided with the bottom of the screen (game over), false otherwise.
+  */
 bool CheckCollisions(Player& player, Ball& ball, Block** levels) {
 
     //Verify collisions between Blocks and Ball
