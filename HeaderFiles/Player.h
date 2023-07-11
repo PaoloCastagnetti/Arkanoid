@@ -38,6 +38,6 @@ private:
     float height;
     float speed;
 
-    class MGDTexture* _texture;
+    class Texture* _texture;
     std::string _path;
 };

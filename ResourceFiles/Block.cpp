@@ -9,7 +9,7 @@ Block::Block() {
 	this->width = BLOCK_WIDTH;
 	this->height = BLOCK_HEIGHT;
 	this->destroyed = false;
-	this->_texture = new MGDTexture();
+	this->_texture = new Texture();
 }
 Block::Block(int X, int Y, bool Destroyed, std::string path) {
 	this->x = X;
@@ -17,7 +17,7 @@ Block::Block(int X, int Y, bool Destroyed, std::string path) {
 	this->width = BLOCK_WIDTH;
 	this->height = BLOCK_HEIGHT;
 	this->destroyed = Destroyed;
-	this->_texture = new MGDTexture();
+	this->_texture = new Texture();
 	if (!this->_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
 	}
@@ -32,7 +32,7 @@ Block::Block(const Block& block) {
 	this->width = BLOCK_WIDTH;
 	this->height = BLOCK_HEIGHT;
 	this->destroyed = block.destroyed;
-	this->_texture = new MGDTexture();
+	this->_texture = new Texture();
 	if (!this->_texture->loadFromFile(block._path)) {
 		printf("Failed to load the texture!\n");
 	}
@@ -88,7 +88,7 @@ void Block::render() {
 }
 void Block::setTexture(std::string _path) {
 	this->_texture->free();
-	this->_texture = new MGDTexture();
+	this->_texture = new Texture();
 	if (!this->_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
 	}

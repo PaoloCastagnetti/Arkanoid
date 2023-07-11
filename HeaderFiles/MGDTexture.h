@@ -5,16 +5,16 @@
 #include <string>
 
 // Texture wrapper class
-class MGDTexture {
+class Texture {
 public:
     // Initializes variables
-    MGDTexture();
+    Texture();
 
     // Initializes variables and tries to load the texture by the path
-    MGDTexture(std::string path);
+    Texture(std::string path);
 
     // Deallocates memory
-    ~MGDTexture();
+    ~Texture();
 
     // Loads image at specified path
     bool loadFromFile(std::string path);

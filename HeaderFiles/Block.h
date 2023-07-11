@@ -37,6 +37,6 @@ private:
     int height;
     bool destroyed;
 
-    class MGDTexture* _texture;
+    class Texture* _texture;
     std::string _path;
 };

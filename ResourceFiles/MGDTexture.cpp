@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-MGDTexture::MGDTexture() {
+Texture::Texture() {
     // Initialize
     _texture = NULL;
     _width = 0;
@@ -14,7 +14,7 @@ MGDTexture::MGDTexture() {
     _rawPitch = 0;
 }
 
-MGDTexture::MGDTexture(std::string path) {
+Texture::Texture(std::string path) {
     // Initialize
     _texture = NULL;
     _width = 0;
@@ -27,12 +27,12 @@ MGDTexture::MGDTexture(std::string path) {
     loadFromFile(path);
 }
 
-MGDTexture::~MGDTexture() {
+Texture::~Texture() {
     // Deallocate existing assets
     free();
 }
 
-bool MGDTexture::loadFromFile(std::string path) {
+bool Texture::loadFromFile(std::string path) {
     // Load pixels
     if (!loadPixelsFromFile(path)) {
         printf("Failed to load pixels for %s!\n", path.c_str());
@@ -47,7 +47,7 @@ bool MGDTexture::loadFromFile(std::string path) {
     return _texture != NULL;
 }
 
-bool MGDTexture::loadPixelsFromFile(std::string path) {
+bool Texture::loadPixelsFromFile(std::string path) {
     // Free preexisting assets
     free();
 
@@ -73,7 +73,7 @@ bool MGDTexture::loadPixelsFromFile(std::string path) {
     return _surfacePixels != NULL;
 }
 
-bool MGDTexture::loadFromPixels() {
+bool Texture::loadFromPixels() {
     // Only load if pixels exist
     if (_surfacePixels == NULL) {
         printf("No pixels loaded!");
@@ -100,7 +100,7 @@ bool MGDTexture::loadFromPixels() {
     return _texture != NULL;
 }
 
-bool MGDTexture::createBlank(int width, int height, SDL_TextureAccess access) {
+bool Texture::createBlank(int width, int height, SDL_TextureAccess access) {
     // Get rid of preexisting texture
     free();
 
@@ -116,7 +116,7 @@ bool MGDTexture::createBlank(int width, int height, SDL_TextureAccess access) {
     return _texture != NULL;
 }
 
-void MGDTexture::free() {
+void Texture::free() {
     // Free texture if it exists
     if (_texture != NULL) {
         SDL_DestroyTexture(_texture);
@@ -132,22 +132,22 @@ void MGDTexture::free() {
     }
 }
 
-void MGDTexture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
+void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
     // Modulate texture rgb
     SDL_SetTextureColorMod(_texture, red, green, blue);
 }
 
-void MGDTexture::setBlendMode(SDL_BlendMode blending) {
+void Texture::setBlendMode(SDL_BlendMode blending) {
     // Set blending function
     SDL_SetTextureBlendMode(_texture, blending);
 }
 
-void MGDTexture::setAlpha(Uint8 alpha) {
+void Texture::setAlpha(Uint8 alpha) {
     // Modulate texture alpha
     SDL_SetTextureAlphaMod(_texture, alpha);
 }
 
-void MGDTexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
     // Set rendering space and render to screen
     SDL_Rect renderQuad = {x, y, _width, _height};
 
@@ -161,25 +161,25 @@ void MGDTexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* c
     SDL_RenderCopyEx(globalRenderer, _texture, clip, &renderQuad, angle, center, flip);
 }
 
-void MGDTexture::renderCopyEx(SDL_Rect* destinationRect, SDL_Rect* clipRect, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void Texture::renderCopyEx(SDL_Rect* destinationRect, SDL_Rect* clipRect, double angle, SDL_Point* center, SDL_RendererFlip flip) {
     // Render to screen
     SDL_RenderCopyEx(globalRenderer, _texture, clipRect, destinationRect, angle, center, flip);
 }
 
-void MGDTexture::setAsRenderTarget() {
+void Texture::setAsRenderTarget() {
     // Make self render target
     SDL_SetRenderTarget(globalRenderer, _texture);
 }
 
-int MGDTexture::getWidth() {
+int Texture::getWidth() {
     return _width;
 }
 
-int MGDTexture::getHeight() {
+int Texture::getHeight() {
     return _height;
 }
 
-Uint32* MGDTexture::getPixels32() {
+Uint32* Texture::getPixels32() {
     Uint32* pixels = NULL;
 
     if (_surfacePixels != NULL) {
@@ -189,7 +189,7 @@ Uint32* MGDTexture::getPixels32() {
     return pixels;
 }
 
-Uint32 MGDTexture::getPixel32(Uint32 x, Uint32 y) {
+Uint32 Texture::getPixel32(Uint32 x, Uint32 y) {
     // Convert the pixels to 32 bit
     Uint32* pixels = static_cast<Uint32*>(_surfacePixels->pixels);
 
@@ -197,7 +197,7 @@ Uint32 MGDTexture::getPixel32(Uint32 x, Uint32 y) {
     return pixels[(y * getPitch32()) + x];
 }
 
-Uint32 MGDTexture::getPitch32() {
+Uint32 Texture::getPitch32() {
     Uint32 pitch = 0;
 
     if (_surfacePixels != NULL) {
@@ -207,7 +207,7 @@ Uint32 MGDTexture::getPitch32() {
     return pitch;
 }
 
-bool MGDTexture::lockTexture() {
+bool Texture::lockTexture() {
     bool success = true;
 
     // Texture is already locked
@@ -226,7 +226,7 @@ bool MGDTexture::lockTexture() {
     return success;
 }
 
-bool MGDTexture::unlockTexture() {
+bool Texture::unlockTexture() {
     bool success = true;
 
     // Texture is not locked
@@ -244,7 +244,7 @@ bool MGDTexture::unlockTexture() {
     return success;
 }
 
-void MGDTexture::copyRawPixels32(void* pixels) {
+void Texture::copyRawPixels32(void* pixels) {
     // Texture is locked
     if (_rawPixels != NULL) {
         // Copy to locked pixels

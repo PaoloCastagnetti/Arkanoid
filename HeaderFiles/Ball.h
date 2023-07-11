@@ -38,6 +38,6 @@ private:
 	float velocityX;
 	float velocityY;
 
-	class MGDTexture* _texture;
+	class Texture* _texture;
 	std::string _path;
 };

@@ -22,7 +22,7 @@ Player::Player() {
     this->_path = "";
 
     // Create and load texture
-    _texture = new MGDTexture();
+    _texture = new Texture();
     if (!_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
     }
@@ -49,7 +49,7 @@ Player::Player(float X, float Y, float Speed, std::string path) {
     this->_path = path;
 
     // Create and load texture
-    _texture = new MGDTexture();
+    _texture = new Texture();
     if (!_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
     }
@@ -73,7 +73,7 @@ Player::Player(const Player& player) {
     this->_path = player._path;
 
     // Create and load texture
-    _texture = new MGDTexture();
+    _texture = new Texture();
     if (!_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
     }
@@ -232,7 +232,7 @@ void Player::render() {
  */
 void Player::setTexture(std::string _path) {
     this->_texture->free();
-    this->_texture = new MGDTexture();
+    this->_texture = new Texture();
     if (!this->_texture->loadFromFile(_path)) {
         printf("Failed to load the texture!\n");
     }

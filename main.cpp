@@ -18,7 +18,7 @@ SDL_Renderer* globalRenderer = nullptr;
 Mix_Music* globalMusic = nullptr;
 
 //Background
-MGDTexture* backgroundTexture;
+Texture* backgroundTexture;
 
 // Initialize SDL and the game window
 bool init() {
@@ -84,7 +84,7 @@ bool init() {
     }
 
     //Initialize background
-    backgroundTexture = new MGDTexture("Assets/Arkanoid_Background.png");
+    backgroundTexture = new Texture("Assets/Arkanoid_Background.png");
 
     return true;
 }

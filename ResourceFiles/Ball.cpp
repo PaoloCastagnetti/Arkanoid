@@ -24,7 +24,7 @@ Ball::Ball(){
 	this->_path = "";
 
 	// Create and load texture
-	_texture = new MGDTexture();
+	_texture = new Texture();
 	if (!_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
 	}
@@ -54,7 +54,7 @@ Ball::Ball(float X, float Y, float Radius, float VelocityX, float VelocityY, std
 	this->_path = path;
 
 	// Create and load texture
-	_texture = new MGDTexture();
+	_texture = new Texture();
 	if (!_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
 	}
@@ -79,7 +79,7 @@ Ball::Ball(const Ball& ball){
 	this->_path = ball._path;
 
 	// Create and load texture
-	_texture = new MGDTexture();
+	_texture = new Texture();
 	if (!_texture->loadFromFile(_path)) {
 		printf("Failed to load the texture!\n");
 	}
