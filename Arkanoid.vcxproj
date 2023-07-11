@@ -24,10 +24,8 @@
     <ClCompile Include="ResourceFiles\Ball.cpp" />
     <ClCompile Include="ResourceFiles\Block.cpp" />
     <ClCompile Include="ResourceFiles\Collisions.cpp" />
-    <ClCompile Include="ResourceFiles\MGDMovableTexture.cpp" />
     <ClCompile Include="ResourceFiles\MGDTexture.cpp" />
     <ClCompile Include="ResourceFiles\Player.cpp" />
-    <ClCompile Include="ResourceFiles\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions.h" />
@@ -36,10 +34,8 @@
     <ClInclude Include="HeaderFiles\Collisions.h" />
     <ClInclude Include="HeaderFiles\Constants.h" />
     <ClInclude Include="HeaderFiles\Globals.h" />
-    <ClInclude Include="HeaderFiles\MGDMovableTexture.h" />
     <ClInclude Include="HeaderFiles\MGDTexture.h" />
     <ClInclude Include="HeaderFiles\Player.h" />
-    <ClInclude Include="HeaderFiles\Timer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

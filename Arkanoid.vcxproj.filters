@@ -24,16 +24,10 @@
     <ClCompile Include="ResourceFiles\Block.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceFiles\Timer.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceFiles\Ball.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceFiles\Collisions.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceFiles\MGDMovableTexture.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceFiles\MGDTexture.cpp">
@@ -53,9 +47,6 @@
     <ClInclude Include="HeaderFiles\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HeaderFiles\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HeaderFiles\Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HeaderFiles\Globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFiles\MGDMovableTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HeaderFiles\MGDTexture.h">
